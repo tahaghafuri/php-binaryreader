@@ -5,7 +5,7 @@ binaryreader is a faster and more elegant alternative to PHP's pack/unpack funct
 ## Installation
 
 ### Pre-built Binaries
-Pre-built binaries for Windows, macOS, and Linux are available in the [Releases](https://github.com/tahaghafuri/php-binaryreader/releases) section.
+Pre-built binaries for Linux are available in the [Releases](https://github.com/tahaghafuri/php-binaryreader/releases) section.
 
 Supported configurations:
 - PHP 8.2 and 8.3
