@@ -11,7 +11,7 @@ Supported configurations:
 - PHP 8.2 and 8.3
 - Non-Thread Safe (NTS)
 - x64 architectures
-- macOS, and Linux platforms
+- Linux platforms
 
 ### PHP Configuration
 Add the following line to your php.ini:
