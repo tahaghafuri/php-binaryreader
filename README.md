@@ -1,73 +1,81 @@
 # binaryreader
 
-binaryreader is a faster and more elegant alternative to ``struct`` for parsing binary data in Python.
+binaryreader is a faster and more elegant alternative to PHP's pack/unpack functions for parsing binary data.
 
-## Example
+## Installation
 
-```python
-from binaryreader import BinaryReader
+### Pre-built Binaries
+Pre-built binaries for Windows, macOS, and Linux are available in the [Releases](https://github.com/tahaghafuri/php-binaryreader/releases) section.
 
-data: bytes|bytearray
-read_little_endian: bool = True
-reader = BinaryReader(data, read_little_endian)
+Supported configurations:
+- PHP 8.2 and 8.3
+- Non-Thread Safe (NTS)
+- x64 architectures
+- macOS, and Linux platforms
 
-text = reader.readStringC()
+### PHP Configuration
+Add the following line to your php.ini:
+```ini
+extension=binaryreader
 ```
 
-## Benchmark
+## Usage
+```php
+$data = "..."; // your binary data
+$read_little_endian = true;
+$reader = new BinaryReader($data, $read_little_endian);
+$text = $reader->readStringC();
+```
 
-TODO
+## API Reference
 
-
-## Documentation
-
-### Notes:
-- kwargs won't be accepted, only args are useable
-- all readArray functions accept a langth as optional argument
-- bytes can be read by using readUInt8Array
-
-
-### Init
-- ``BinaryReader(data: bytes|bytearray, is_little_endian: bool)``
+### Constructor
+```php
+__construct(string $data, bool $littleEndian = false)
+```
 
 ### Properties
+- `endian: bool` - Get/set endianness (true = little, false = big)
+- `position: int` - Get/set cursor position
+- `size: int` - Get buffer size
 
-- ``.endian: bool``\[get,set\] - endianness of the reader (True - little, False - big)
-- ``.position: int``\[get,set\] - position of the cursor within the data
-- ``.size: int``\[get\] - size of underlying/passed object
-- ``.obj: bytes|bytearray``\[get\] - underlying/passed object
+### Methods
 
-### Functions
-- ``.readBool(): bool`` - reads a bool
-- ``.readInt8(): int`` - reads an int8
-- ``.readUInt8(): int`` - reads an uint8
-- ``.readInt16(): int`` - reads an int16
-- ``.readUInt16(): int`` - reads an uint16
-- ``.readInt32(): int`` - reads an int32
-- ``.readUInt32(): int`` - reads an uint32
-- ``.readInt64(): int`` - reads an int64
-- ``.readUInt64(): int`` - reads an uint64
-- ``.readHalf(): float`` - reads a half
-- ``.readFloat(): float`` - reads a float
-- ``.readDouble(): float`` - reads a double
-- ``.readBoolArray(): [bool]`` - reads a bool array
-- ``.readInt8Array(): [int]`` - reads a array of int8
-- ``.readUInt8Array(): bytearray`` - reads a array of uint8
-- ``.readInt16Array(): [int]`` - reads a array of int16
-- ``.readUInt16Array(): [int]`` - reads a array of uint16
-- ``.readInt32Array(): [int]`` - reads a array of int32
-- ``.readUInt32Array(): [int]`` - reads a array of uint32
-- ``.readInt64Array(): [int]`` - reads a array of int64
-- ``.readUInt64Array(): [int]`` - reads a array of uint64
-- ``.readHalfArray(): [float]`` - reads a array of half
-- ``.readFloatArray(): [float]`` - reads a array of float
-- ``.readDoubleArray(): [float]`` - reads a array of double
-- ``.readStringC(): str`` - reads a null terminated string
-- ``.readStringCArray(): [str]`` - reads an array of null terminated strings
-- ``.readString(): str`` - reads a string (if length is not passed as arg, read an int as length)
-- ``.readStringArray(): [str]`` - reads an array of strings
-- ``.readStringAligned(): str`` - same as readString but aligned to 4 bytes after reading the string
-- ``.readStringAlignedArray(): [str]`` - reads an array of aligned strings
-- ``.align(align_by: int): int`` - aligns the cursor to the given input and returns the position after the alignment
-- ``.readVarInt(): int`` - reads a varint
-- ``.readLSB(): bytearray`` - reads the lsb data of the given size (in bytes to read -> output length is 1/8 of that)
+#### Basic Types
+- `readBool(): bool`
+- `readInt8(): int`
+- `readUInt8(): int`
+- `readInt16(): int`
+- `readUInt16(): int`
+- `readInt32(): int`
+- `readUInt32(): int`
+- `readInt64(): int`
+- `readUInt64(): int`
+- `readFloat(): float`
+- `readDouble(): float`
+
+#### Array Types
+- `readBoolArray(?int $length = null): array`
+- `readInt8Array(?int $length = null): array`
+- `readUInt8Array(?int $length = null): string`
+- `readInt16Array(?int $length = null): array`
+- `readUInt16Array(?int $length = null): array`
+- `readInt32Array(?int $length = null): array`
+- `readUInt32Array(?int $length = null): array`
+- `readInt64Array(?int $length = null): array`
+- `readUInt64Array(?int $length = null): array`
+- `readFloatArray(?int $length = null): array`
+- `readDoubleArray(?int $length = null): array`
+
+#### String Types
+- `readStringC(): string` - Read null-terminated string
+- `readString(?int $length = null): string` - Read length-prefixed string
+- `readStringAligned(): string` - Read aligned string
+- `readStringCArray(?int $length = null): array`
+- `readStringArray(?int $length = null): array`
+- `readStringAlignedArray(?int $length = null): array`
+
+#### Utility Methods
+- `align(int $boundary): int`
+- `readVarInt(): int`
+- `readLSB(?int $length = null): string`
